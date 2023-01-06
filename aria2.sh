@@ -15,7 +15,7 @@
 sh_ver="2.7.4"
 export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin
 aria2_conf_dir="/root/.aria2c"
-download_path="/root/downloads"
+download_path="/content/drive/Shareddrives/DIREX/OUTPUT"
 aria2_conf="${aria2_conf_dir}/aria2.conf"
 aria2_log="${aria2_conf_dir}/aria2.log"
 aria2c="/usr/local/bin/aria2c"
