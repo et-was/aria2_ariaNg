@@ -129,9 +129,16 @@ Download_aria2() {
     echo -e "${Info} Aria2 Main Program Installation Complete!"
 }
 Download_aria2_conf() {
-    PROFILE_URL1="https://p3terx.github.io/aria2.conf"
-    PROFILE_URL2="https://aria2c.now.sh"
-    PROFILE_URL3="https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf@master"
+    PROFILE_URL1="https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/conf/aria2.conf"
+    PROFILE_URL2="https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/conf/clean.sh"
+    PROFILE_URL3="https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/conf/core"
+    PROFILE_URL4="https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/conf/delete.sh"
+    PROFILE_URL5="https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/conf/dht.dat"
+    PROFILE_URL6="https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/conf/dht6.dat"
+    PROFILE_URL7="https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/conf/move.sh"
+    PROFILE_URL8="https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/conf/rclone.env"
+    PROFILE_URL9="https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/conf/script.conf"
+    PROFILE_URL10="https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/conf/upload.sh"
     PROFILE_LIST="
 aria2.conf
 clean.sh
@@ -149,8 +156,15 @@ LICENSE
     for PROFILE in ${PROFILE_LIST}; do
         [[ ! -f ${PROFILE} ]] && rm -rf ${PROFILE}
         wget -N -t2 -T3 ${PROFILE_URL1}/${PROFILE} ||
-            wget -N -t2 -T3 ${PROFILE_URL2}/${PROFILE} ||
-            wget -N -t2 -T3 ${PROFILE_URL3}/${PROFILE}
+        wget -N -t2 -T3 ${PROFILE_URL2}/${PROFILE} ||
+        wget -N -t2 -T3 ${PROFILE_URL3}/${PROFILE} ||
+        wget -N -t2 -T3 ${PROFILE_URL4}/${PROFILE} ||
+        wget -N -t2 -T3 ${PROFILE_URL5}/${PROFILE} ||
+        wget -N -t2 -T3 ${PROFILE_URL6}/${PROFILE} ||
+        wget -N -t2 -T3 ${PROFILE_URL7}/${PROFILE} ||
+        wget -N -t2 -T3 ${PROFILE_URL8}/${PROFILE} ||
+        wget -N -t2 -T3 ${PROFILE_URL9}/${PROFILE} ||
+        wget -N -t2 -T3 ${PROFILE_URL10}/${PROFILE}
         [[ ! -s ${PROFILE} ]] && {
             echo -e "${Error} '${PROFILE}' Download failed! Clean up residual files..."
             rm -vrf "${aria2_conf_dir}"
@@ -168,9 +182,7 @@ LICENSE
 }
 Service_aria2() {
     if [[ ${release} = "centos" ]]; then
-        wget -N -t2 -T3 "https://raw.githubusercontent.com/P3TERX/aria2.sh/master/service/aria2_centos" -O /etc/init.d/aria2 ||
-            wget -N -t2 -T3 "https://cdn.jsdelivr.net/gh/P3TERX/aria2.sh@master/service/aria2_centos" -O /etc/init.d/aria2 ||
-            wget -N -t2 -T3 "https://gh-raw.p3terx.com/P3TERX/aria2.sh/master/service/aria2_centos" -O /etc/init.d/aria2
+        wget -N -t2 -T3 "https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/service/aria2_centos" -O /etc/init.d/aria2
         [[ ! -s /etc/init.d/aria2 ]] && {
             echo -e "${Error} Aria 2 service management script download failed!"
             exit 1
@@ -179,9 +191,7 @@ Service_aria2() {
         chkconfig --add aria2
         chkconfig aria2 on
     else
-        wget -N -t2 -T3 "https://raw.githubusercontent.com/P3TERX/aria2.sh/master/service/aria2_debian" -O /etc/init.d/aria2 ||
-            wget -N -t2 -T3 "https://cdn.jsdelivr.net/gh/P3TERX/aria2.sh@master/service/aria2_debian" -O /etc/init.d/aria2 ||
-            wget -N -t2 -T3 "https://gh-raw.p3terx.com/P3TERX/aria2.sh/master/service/aria2_debian" -O /etc/init.d/aria2
+        wget -N -t2 -T3 "https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/service/aria2_debian" -O /etc/init.d/aria2
         [[ ! -s /etc/init.d/aria2 ]] && {
             echo -e "${Error} Aria 2 service management script download failed!"
             exit 1
@@ -657,7 +667,7 @@ Set_iptables() {
     fi
 }
 Update_Shell() {
-    sh_new_ver=$(wget -qO- -t1 -T3 "https://raw.githubusercontent.com/P3TERX/aria2.sh/master/aria2.sh" | grep 'sh_ver="' | awk -F "=" '{print $NF}' | sed 's/\"//g' | head -1) && sh_new_type="github"
+    sh_new_ver=$(wget -qO- -t1 -T3 "https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/aria2.sh" | grep 'sh_ver="' | awk -F "=" '{print $NF}' | sed 's/\"//g' | head -1) && sh_new_type="github"
     [[ -z ${sh_new_ver} ]] && echo -e "${Error} Unable to link to Github!" && exit 0
     if [[ -e "/etc/init.d/aria2" ]]; then
         rm -rf /etc/init.d/aria2
@@ -667,7 +677,7 @@ Update_Shell() {
     if [[ -n $(crontab_update_status) ]]; then
         crontab_update_stop
     fi
-    wget -N "https://raw.githubusercontent.com/P3TERX/aria2.sh/master/aria2.sh" && chmod +x aria2.sh
+    wget -N "https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/aria2.sh" && chmod +x aria2.sh
     echo -e "The script has been updated to the latest version[ ${sh_new_ver} ] !(Note: Since the update is to overwrite the currently running script directly, you may be prompted for some errors that you can ignore)" && exit 0
 }
 
