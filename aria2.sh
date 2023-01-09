@@ -182,7 +182,8 @@ LICENSE
 }
 Service_aria2() {
     if [[ ${release} = "centos" ]]; then
-        wget -N -t2 -T3 "https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/service/aria2_centos" -O /etc/init.d/aria2
+        wget -N -t2 -T3 "https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/service/aria2_centos" -O /etc/init.d/aria2 ||
+            wget -N -t2 -T3 "https://cdn.jsdelivr.net/gh/et-was/aria2_ariaNg@master/service/aria2_centos" -O /etc/init.d/aria2
         [[ ! -s /etc/init.d/aria2 ]] && {
             echo -e "${Error} Aria 2 service management script download failed!"
             exit 1
@@ -191,7 +192,8 @@ Service_aria2() {
         chkconfig --add aria2
         chkconfig aria2 on
     else
-        wget -N -t2 -T3 "https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/service/aria2_debian" -O /etc/init.d/aria2
+        wget -N -t2 -T3 "https://raw.githubusercontent.com/et-was/aria2_ariaNg/main/service/aria2_debian" -O /etc/init.d/aria2 ||
+            wget -N -t2 -T3 "https://cdn.jsdelivr.net/gh/et-was/aria2_ariaNg@master/service/aria2_debian" -O /etc/init.d/aria2
         [[ ! -s /etc/init.d/aria2 ]] && {
             echo -e "${Error} Aria 2 service management script download failed!"
             exit 1
